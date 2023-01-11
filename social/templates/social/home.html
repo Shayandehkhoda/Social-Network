@@ -1,0 +1,117 @@
+{% load static %}
+{% include 'social/inc/header.html' %}
+{% load humanize %}
+{% load inclusion_tags %}
+
+<!-- start banner Area -->
+	<section class="banner-area relative blog-home-banner" id="home">
+		<div class="overlay overlay-bg"></div>
+		<div class="container">
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="about-content blog-header-content col-lg-12">
+					<h1 class="text-white">
+						Welcome to My Django Social Network <br> {% if request.user.get_short_name %}{{request.user.get_short_name}}{% endif %}
+					</h1>
+					<p class="text-white">
+						Here you can find a social network for Python, Django and all needed to become a Backend-Developer
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+
+	<!-- Start top-category-widget Area -->
+	<section class="top-category-widget-area pt-90 pb-90 ">
+		<div class="container">
+		</div>
+		<div style="text-align: center; width: 300px; margin: auto; background-color: #f9f9ff;">{% include 'social/inc/messages.html' %}</div>
+	</section>
+	<!-- End top-category-widget Area -->
+
+	<!-- Start post-content Area -->
+	<section class="post-content-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 posts-list">
+					{% for post in posts %}
+					<div class="single-post row">
+						<div class="col-lg-3  col-md-3 meta-details">
+							<div class="user-details row">
+								<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'social:profile' post.user.username %}">{{post.user.get_full_name}}</a> <span class="lnr lnr-user"></span></p>
+								<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.created|date:"d M Y"}}</a> <span class="lnr lnr-calendar-full"></span></p>
+								<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.like_count}} Likes</a> <span class="lnr lnr-thumbs-up"></span></p>
+								<p class="comments col-lg-12 col-md-12 col-6"><a href="#">{{post.postcm.count}} Comments</a> <span class="lnr lnr-bubble"></span></p>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-9 ">
+							<div class="feature-img">
+								<img class="img-fluid" src= {{post.img.url}} alt="">
+							</div>
+							<a class="posts-title" href="{{ post.get_absolute_url }}"><h3>{{post.title}}</h3></a>
+							<p class="excert">
+								{{post.body|truncatewords:40|safe}}
+							</p>
+							<a href="{{ post.get_absolute_url }}" class="primary-btn">View More</a>
+						</div>
+					</div>
+					{% empty %}
+					<h3> No posts at the moment </h3>
+					{% endfor %}
+					<nav class="blog-pagination justify-content-center d-flex">
+						<ul class="pagination">
+							{% if posts.has_previous %}
+							<li class="page-item">
+								{% if request.GET.q %}
+									<a href="?page={{posts.previous_page_number}}&q={{ request.GET.q }}" class="page-link" aria-label="Previous">
+								{% else %}
+									<a href="{% url 'social:home' posts.previous_page_number %}" class="page-link" aria-label="Previous">
+								{% endif %}
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-left"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+							{% if posts %}
+							{% for i in posts.paginator.page_range %}
+								{% if posts.number == i %}
+								<li class="page-item active"><a href="#" class="page-link">{{i}}</a></li>
+								{% else %}
+									{% if request.GET.q %}
+										<li class="page-item"><a href="?page={{ i }}&q={{ request.GET.q }}" class="page-link">{{ i }}</a></li>
+									{% else %}
+										<li class="page-item"><a href="{% url 'social:home' i %}" class="page-link">{{ i }}</a></li>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+							{% if posts.has_next %}
+							<li class="page-item">
+								{% if request.GET.q %}
+								<a href="?page={{posts.next_page_number}}&q={{ request.GET.q }}" class="page-link" aria-label="Previous">
+								{% else %}
+								<a href="{% url 'social:home' posts.next_page_number %}" class="page-link" aria-label="Next">
+								{% endif %}
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-right"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+				<div class="col-lg-4 sidebar-widgets">
+					<div class="widget-wrap">
+						{% latest_post %}
+						{% include 'social/inc/widget-search.html' %}
+					</div>
+			</div>
+		</div>
+	</section>
+	<!-- End post-content Area -->
+	{% include 'social/inc/footer.html' %}
+
+</body>
+</html>

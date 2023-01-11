@@ -1,0 +1,8 @@
+{% load static %}
+
+<div class="single-sidebar-widget search-widget">
+    <form method="GET" class="search-form" action="{% url 'social:search' %}" >
+        <input placeholder="Search Posts" value="{{ request.GET.q }}" name="q" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>

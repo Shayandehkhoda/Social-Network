@@ -1,0 +1,43 @@
+{% load static %}
+{% include 'social/inc/header.html' %}
+
+		<!-- start banner Area -->
+		<section class="relative about-banner">
+			<div class="overlay overlay-bg"></div>
+			<div class="container">
+				<div class="row d-flex align-items-center justify-content-center">
+					<div class="about-content col-lg-12">
+						<h1 class="text-white">
+							Update Post
+						</h1>
+						<p class="text-white link-nav"><a href="#">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="#"> Update post</a></p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End banner Area -->
+
+		<!-- Start contact-page Area -->
+		<section class="contact-page-area section-gap">
+			<div class="container">
+				{% include 'social/inc/messages.html' %}
+				<p>{{form.title.errors}}</p>
+				<div class="row">
+					<div>
+						<form class="form-area" action="#" method="post" enctype="multipart/form-data"> {% csrf_token %}
+							<div class="row">
+								<div class="col-lg-8 form-group">
+									{{form.as_p}}
+									<button class="genric-btn primary" style="float: left;" type="submit">Submit Post</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End contact-page Area -->
+
+		{% include 'social/inc/footer.html' %}
+	</body>
+	</html>

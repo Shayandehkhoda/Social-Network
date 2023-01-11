@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>Login Form</title>
+
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+
+  </head>
+
+  <body>
+
+<form class="box" action="" method="post">{% csrf_token %}
+
+<div style="color: red;">  {% include 'social/inc/messages.html' %} </div>
+  <h1>Login</h1>
+
+  {% for field in form %}
+      <div class="fieldWrapper">
+        {% for error in field.errors %} <p>{{ error }}</p> {% endfor %}
+          {{ field.label_tag }} {{ field }}
+      </div>
+  {% endfor %}
+  <input type="submit" name="" value="Login">
+  <a href="{% url 'accounts:signup' %}">Dont have account?/Signup</a>
+
+</form>
+
+  </body>
+
+</html>
+

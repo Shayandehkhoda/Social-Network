@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>َSignUp</title>
+
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+
+  </head>
+
+  <body>
+
+    <form class="box" action="" method="post">{% csrf_token %}
+
+  <h1>signup</h1>
+
+  {% for field in form %}
+      <div class="fieldWrapper">
+        {% for error in field.errors %} <p>{{ error }}</p> {% endfor %}
+          {{ field.label_tag }} {{ field }}
+      </div>
+  {% endfor %}
+  <input type="submit" name="" value="Signup">
+
+</form>
+
+  </body>
+
+</html>
+
