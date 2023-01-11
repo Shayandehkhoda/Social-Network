@@ -1,7 +1,6 @@
 # Social-Network
 
 **Will have updates.<br>**
-<br>
 - Class based views<br>
 - Template from colorlib<br>
 - Email authentication backend
